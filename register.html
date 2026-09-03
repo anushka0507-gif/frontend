@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SehatSetu - Registration</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #e8f7ff,
+                #effff9
+            );
+
+            color: #102a72;
+        }
+
+        .container {
+            width: 460px;
+            padding: 20px;
+        }
+
+        /* Logo */
+
+        .logo {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+
+            margin: auto;
+
+            border-radius: 17px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #168be8,
+                #18b99a
+            );
+
+            color: white;
+
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .logo h1 {
+            margin-top: 8px;
+            font-size: 31px;
+        }
+
+        .logo p {
+            margin-top: 4px;
+            font-size: 14px;
+            color: #55709d;
+        }
+
+        .tagline {
+            text-align: center;
+            color: #42639a;
+            margin-bottom: 22px;
+        }
+
+        /* Card */
+
+        .card {
+            background: white;
+
+            padding: 30px 35px;
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 15px 40px rgba(42, 104, 150, 0.15);
+        }
+
+        .card h2 {
+            text-align: center;
+
+            font-size: 30px;
+
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #65799b;
+
+            margin-bottom: 22px;
+        }
+
+        /* Input */
+
+        .input-box {
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+
+            border: 1.5px solid #cbddec;
+
+            border-radius: 13px;
+
+            padding: 0 14px;
+
+            margin-bottom: 13px;
+
+            background: #fbfdff;
+        }
+
+        .input-box span {
+            font-size: 19px;
+            margin-right: 11px;
+        }
+
+        .input-box input,
+        .input-box select {
+            width: 100%;
+
+            border: none;
+            outline: none;
+
+            background: transparent;
+
+            font-size: 15px;
+
+            color: #263f75;
+        }
+
+        .input-box:focus-within {
+            border-color: #168be8;
+        }
+
+        /* Two fields in one row */
+
+        .row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .row .input-box {
+            width: 50%;
+        }
+
+        /* Terms */
+
+        .terms {
+            font-size: 13px;
+
+            color: #52688d;
+
+            margin: 8px 0 18px;
+
+            line-height: 1.5;
+        }
+
+        .terms input {
+            margin-right: 6px;
+        }
+
+        .terms a {
+            color: #0878e8;
+
+            text-decoration: none;
+        }
+
+        /* Register Button */
+
+        .register-btn {
+            width: 100%;
+
+            height: 55px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background: #1675e5;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .register-btn:hover {
+            background: #0d63c9;
+
+            transform: translateY(-2px);
+        }
+
+        /* Login */
+
+        .login {
+            text-align: center;
+
+            margin-top: 18px;
+
+            padding: 15px;
+
+            background: #f1f7ff;
+
+            border-radius: 12px;
+
+            color: #52688d;
+
+            font-size: 14px;
+        }
+
+        .login a {
+            color: #0878e8;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 500px) {
+
+            .container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .row .input-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Logo -->
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                +
+            </div>
+
+            <h1>SehatSetu</h1>
+
+            <p>
+                Rural Healthcare Platform
+            </p>
+
+        </div>
+
+        <p class="tagline">
+            Better Health • Brighter Tomorrow
+        </p>
+
+
+        <!-- Registration Card -->
+
+        <div class="card">
+
+            <h2>Create Account</h2>
+
+            <p class="subtitle">
+                Register for your SehatSetu account
+            </p>
+
+
+            <!-- Full Name -->
+
+            <div class="input-box">
+
+                <span>♙</span>
+
+                <input
+                    type="text"
+                    placeholder="Full Name"
+                >
+
+            </div>
+
+
+            <!-- Email -->
+
+            <div class="input-box">
+
+                <span>✉</span>
+
+                <input
+                    type="email"
+                    placeholder="Email Address"
+                >
+
+            </div>
+
+
+            <!-- Mobile -->
+
+            <div class="input-box">
+
+                <span>☎</span>
+
+                <input
+                    type="tel"
+                    placeholder="Mobile Number"
+                >
+
+            </div>
+
+
+            <!-- DOB + Gender -->
+
+            <div class="row">
+
+                <div class="input-box">
+
+                    <span>📅</span>
+
+                    <input
+                        type="date"
+                    >
+
+                </div>
+
+
+                <div class="input-box">
+
+                    <span>♙</span>
+
+                    <select>
+
+                        <option value="" disabled selected>
+                            Gender
+                        </option>
+
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="input-box">
+
+                <span>🔒</span>
+
+                <input
+                    type="password"
+                    placeholder="Create Password"
+                >
+
+            </div>
+
+
+            <!-- Confirm Password -->
+
+            <div class="input-box">
+
+                <span>🔒</span>
+
+                <input
+                    type="password"
+                    placeholder="Confirm Password"
+                >
+
+            </div>
+
+
+            <!-- Terms -->
+
+            <div class="terms">
+
+                <label>
+
+                    <input type="checkbox">
+
+                    I agree to the
+                    <a href="#">Terms & Conditions</a>
+
+                </label>
+
+            </div>
+
+
+            <!-- Button -->
+
+            <button class="register-btn">
+                Create Account →
+            </button>
+
+
+            <!-- Login -->
+
+            <div class="login">
+
+                Already have an account?
+
+                <a href="index.html">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

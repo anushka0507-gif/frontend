@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SwasthyaSetu - Health Worker Dashboard</title>
+
+    <link rel="stylesheet" href="healthworkerdashboard.css">
+
+</head>
+
+<body>
+
+    <div id="loadingScreen">
+        <div class="loader-content">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <h2>SwasthyaSetu</h2>
+            <p>Loading Health Worker Dashboard...</p>
+        </div>
+    </div>
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+
+            <div>
+                <h2>SwasthyaSetu</h2>
+                <span data-lang="healthWorker">Health Worker</span>
+            </div>
+        </div>
+
+
+        <ul class="menu">
+
+            <li class="active" onclick="showSection('dashboard', this)">
+                <i class="fa-solid fa-chart-line"></i>
+                <span data-lang="dashboard">Dashboard</span>
+            </li>
+
+            <li onclick="showSection('patients', this)">
+                <i class="fa-solid fa-users"></i>
+                <span data-lang="patients">Patients</span>
+            </li>
+
+            <li onclick="showSection('triage', this)">
+                <i class="fa-solid fa-stethoscope"></i>
+                <span data-lang="triage">Digital Triage</span>
+            </li>
+
+            <li onclick="showSection('appointments', this)">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span data-lang="appointments">Appointments & Queue</span>
+            </li>
+
+            <li onclick="showSection('teleconsultation', this)">
+                <i class="fa-solid fa-video"></i>
+                <span data-lang="teleconsultation">Teleconsultation</span>
+            </li>
+
+            <li onclick="showSection('referrals', this)">
+                <i class="fa-solid fa-share"></i>
+                <span data-lang="referrals">Referral Tracking</span>
+            </li>
+
+            <li onclick="showSection('diagnostics', this)">
+                <i class="fa-solid fa-flask"></i>
+                <span data-lang="diagnostics">Diagnostics</span>
+            </li>
+
+            <li onclick="showSection('medicine', this)">
+                <i class="fa-solid fa-pills"></i>
+                <span data-lang="medicine">Medicine Availability</span>
+            </li>
+
+            <li onclick="showSection('followup', this)">
+                <i class="fa-solid fa-user-shield"></i>
+                <span data-lang="followup">High-Risk Follow-up</span>
+            </li>
+
+            <li onclick="showSection('emergency', this)" class="emergency-menu">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span data-lang="emergency">Emergency</span>
+            </li>
+
+        </ul>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="connection-status">
+                <span class="status-dot"></span>
+                <span data-lang="online">System Online</span>
+            </div>
+
+            <button class="logout-btn" onclick="logoutSystem()">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span data-lang="logout">Logout</span>
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div class="top-left">
+
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div>
+                    <h2 id="pageTitle">Health Worker Dashboard</h2>
+                    <p id="currentDate"></p>
+                </div>
+
+            </div>
+
+
+            <div class="top-right">
+
+        
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input
+                        type="text"
+                        id="globalSearch"
+                        placeholder="Search patient..."
+                        onkeyup="searchPatient()">
+                </div>
+
+
+               
+                <select id="languageSelector" onchange="changeLanguage()">
+                    <option value="en">English</option>
+                    <option value="bn">বাংলা</option>
+                    <option value="hi">हिंदी</option>
+                    <option value="mr">मराठी</option>
+                </select>
+
+
+               
+                <button class="notification-btn">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <div class="content-area">
+
+
+
+            <section id="dashboard" class="page-section active-section">
+
+                <div class="welcome-banner">
+
+                    <div>
+                        <h1 data-lang="welcome">Welcome to SwasthyaSetu</h1>
+
+                        <p data-lang="welcomeText">
+                            Manage patient care, referrals, appointments and community healthcare services efficiently.
+                        </p>
+
+                        <button onclick="showSectionDirect('patients')">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span data-lang="registerPatient">
+                                Register New Patient
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="welcome-icon">
+                        <i class="fa-solid fa-hospital-user"></i>
+                    </div>
+
+                </div>
+
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon blue">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+
+                        <div>
+                            <p data-lang="totalPatients">Total Patients</p>
+                            <h2 id="totalPatients">0</h2>
+                            <span class="positive">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                Updated
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon green">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+
+                        <div>
+                            <p data-lang="todayAppointments">
+                                Today's Appointments
+                            </p>
+                            <h2 id="todayAppointments">0</h2>
+                            <span>Manage Queue</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon orange">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+
+                        <div>
+                            <p data-lang="highRisk">High-Risk Follow-ups</p>
+                            <h2 id="highRiskCount">0</h2>
+                            <span>Priority Monitoring</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon red">
+                            <i class="fa-solid fa-share"></i>
+                        </div>
+
+                        <div>
+                            <p data-lang="pendingReferrals">
+                                Pending Referrals
+                            </p>
+                            <h2 id="pendingReferrals">0</h2>
+                            <span>Track Progress</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+              
+
+                <div class="dashboard-grid">
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <h3 data-lang="quickActions">
+                                Quick Actions
+                            </h3>
+                        </div>
+
+                        <div class="quick-actions">
+
+                            <button onclick="showSectionDirect('patients')">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <span data-lang="addPatient">
+                                    Add Patient
+                                </span>
+                            </button>
+
+                            <button onclick="showSectionDirect('triage')">
+                                <i class="fa-solid fa-stethoscope"></i>
+                                <span data-lang="startTriage">
+                                    Start Triage
+                                </span>
+                            </button>
+
+                            <button onclick="showSectionDirect('appointments')">
+                                <i class="fa-solid fa-calendar-plus"></i>
+                                <span data-lang="bookAppointment">
+                                    Book Appointment
+                                </span>
+                            </button>
+
+                            <button onclick="showSectionDirect('referrals')">
+                                <i class="fa-solid fa-share"></i>
+                                <span data-lang="createReferral">
+                                    Create Referral
+                                </span>
+                            </button>
+
+                            <button onclick="showSectionDirect('emergency')" class="emergency-action">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                <span data-lang="emergency">
+                                    Emergency
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <h3 data-lang="todayTasks">Today's Tasks</h3>
+                            <span class="task-badge" id="taskCount">0 Tasks</span>
+                        </div>
+
+                        <div id="taskList">
+
+                            <div class="empty-state">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                                <p>No pending tasks available</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel system-overview">
+
+                    <div class="panel-header">
+                        <h3 data-lang="facilityOverview">
+                            Facility Overview
+                        </h3>
+                    </div>
+
+                    <div class="overview-grid">
+
+                        <div>
+                            <i class="fa-solid fa-wifi"></i>
+                            <h4 data-lang="connectivity">Connectivity</h4>
+                            <p id="networkStatus">Online</p>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-database"></i>
+                            <h4 data-lang="records">Digital Records</h4>
+                            <p>Secure Storage</p>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-language"></i>
+                            <h4 data-lang="languageSupport">
+                                Language Support
+                            </h4>
+                            <p>4 Languages</p>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-shield-heart"></i>
+                            <h4 data-lang="careQuality">
+                                Care Quality
+                            </h4>
+                            <p>Continuous Monitoring</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+
+            <section id="patients" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 data-lang="patientManagement">
+                            Patient Management
+                        </h2>
+
+                        <p>
+                            Register and manage patient health records
+                        </p>
+                    </div>
+
+                    <button class="primary-btn" onclick="openPatientModal()">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <span data-lang="registerPatient">
+                            Register Patient
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="table-top">
+
+                        <input
+                            type="text"
+                            id="patientSearch"
+                            placeholder="Search by name or ID..."
+                            onkeyup="filterPatients()">
+
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Patient ID</th>
+                                    <th data-lang="name">Name</th>
+                                    <th data-lang="age">Age</th>
+                                    <th data-lang="gender">Gender</th>
+                                    <th data-lang="contact">Contact</th>
+                                    <th data-lang="status">Status</th>
+                                    <th data-lang="action">Action</th>
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="patientTableBody">
+
+                                <tr class="empty-row">
+                                    <td colspan="7">
+                                        No patient records available. Register a patient to begin.
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section id="triage" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 data-lang="digitalTriage">
+                            Digital Triage
+                        </h2>
+
+                        <p>
+                            Record basic symptoms and vital signs for healthcare assessment.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="form-panel">
+
+                    <form id="triageForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label data-lang="patientName">
+                                    Patient Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="triagePatient"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Temperature (°C)</label>
+
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    id="temperature">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Blood Pressure</label>
+
+                                <input
+                                    type="text"
+                                    placeholder="120/80"
+                                    id="bloodPressure">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Heart Rate (BPM)</label>
+
+                                <input
+                                    type="number"
+                                    id="heartRate">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Oxygen Saturation (%)</label>
+
+                                <input
+                                    type="number"
+                                    id="oxygenLevel">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label data-lang="symptoms">
+                                    Symptoms
+                                </label>
+
+                                <select id="symptoms">
+
+                                    <option value="">Select Symptom</option>
+                                    <option>Fever</option>
+                                    <option>Cough</option>
+                                    <option>Breathing Difficulty</option>
+                                    <option>Chest Pain</option>
+                                    <option>Headache</option>
+                                    <option>Pregnancy Related</option>
+                                    <option>Other</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label data-lang="notes">
+                                Additional Notes
+                            </label>
+
+                            <textarea
+                                id="triageNotes"
+                                rows="4"
+                                placeholder="Enter observations..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <button type="submit" class="primary-btn">
+
+                            <i class="fa-solid fa-stethoscope"></i>
+
+                            <span data-lang="submitTriage">
+                                Submit Triage Assessment
+                            </span>
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <div id="triageResult"></div>
+
+            </section>
+
+
+
+   
+
+            <section id="appointments" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 data-lang="appointmentsQueue">
+                            Appointments & Queue
+                        </h2>
+
+                        <p>
+                            Manage consultation appointments and patient queue.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="form-panel">
+
+                        <h3>Book New Appointment</h3>
+
+                        <form id="appointmentForm">
+
+                            <div class="form-group">
+                                <label>Patient Name</label>
+                                <input type="text" id="appointmentPatient" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date" id="appointmentDate" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Consultation Type</label>
+
+                                <select id="consultationType">
+                                    <option>General Consultation</option>
+                                    <option>Specialist Consultation</option>
+                                    <option>Follow-up</option>
+                                    <option>Maternal Care</option>
+                                    <option>Child Care</option>
+                                </select>
+
+                            </div>
+
+                            <button class="primary-btn" type="submit">
+                                <i class="fa-solid fa-calendar-plus"></i>
+                                Add to Queue
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <h3>Patient Queue</h3>
+                        </div>
+
+                        <div id="appointmentList">
+
+                            <div class="empty-state">
+                                <i class="fa-solid fa-calendar"></i>
+                                <p>No appointments scheduled</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section id="teleconsultation" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 data-lang="teleconsultation">
+                            Assisted Teleconsultation
+                        </h2>
+
+                        <p>
+                            Coordinate remote consultations with healthcare professionals.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="teleconsultation-card">
+
+                    <div class="tele-icon">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+
+                    <h2>Teleconsultation Support</h2>
+
+                    <p>
+                        Connect patients with available doctors through an approved
+                        telemedicine service.
+                    </p>
+
+                    <div class="tele-form">
+
+                        <input
+                            type="text"
+                            id="telePatient"
+                            placeholder="Enter Patient Name">
+
+                        <select id="specialist">
+
+                            <option value="">Select Specialist</option>
+                            <option>General Physician</option>
+                            <option>Cardiologist</option>
+                            <option>Gynecologist</option>
+                            <option>Pediatrician</option>
+                            <option>Dermatologist</option>
+
+                        </select>
+
+                    </div>
+
+                    <button class="primary-btn" onclick="requestTeleconsultation()">
+
+                        <i class="fa-solid fa-video"></i>
+
+                        Request Teleconsultation
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+          
+
+            <section id="referrals" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 data-lang="referralTracking">
+                            Referral Tracking
+                        </h2>
+
+                        <p>
+                            Track patient referrals between healthcare facilities.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="form-panel">
+
+                    <form id="referralForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label>Patient Name</label>
+
+                                <input
+                                    type="text"
+                                    id="referralPatient"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Referral Facility</label>
+
+                                <input
+                                    type="text"
+                                    id="referralFacility"
+                                    placeholder="Hospital / PHC / Specialist"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Referral Reason</label>
+
+                                <select id="referralReason">
+
+                                    <option>Specialist Consultation</option>
+                                    <option>Emergency Care</option>
+                                    <option>Diagnostic Test</option>
+                                    <option>Maternal Care</option>
+                                    <option>Child Care</option>
+                                    <option>Other</option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Priority</label>
+
+                                <select id="referralPriority">
+
+                                    <option>Normal</option>
+                                    <option>High</option>
+                                    <option>Emergency</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <button class="primary-btn" type="submit">
+
+                            <i class="fa-solid fa-share"></i>
+
+                            Create Referral
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <h3>Referral Records</h3>
+                    </div>
+
+                    <div id="referralList">
+
+                        <div class="empty-state">
+                            <i class="fa-solid fa-share"></i>
+                            <p>No referrals created</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+          
+
+            <section id="diagnostics" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 data-lang="diagnostics">
+                            Diagnostic Coordination
+                        </h2>
+
+                        <p>
+                            Manage diagnostic tests and reports.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="form-panel">
+
+                        <h3>Request Diagnostic Test</h3>
+
+                        <form id="diagnosticForm">
+
+                            <div class="form-group">
+                                <label>Patient Name</label>
+                                <input type="text" id="diagnosticPatient" required>
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Test Type</label>
+
+                                <select id="testType">
+
+                                    <option>Blood Test</option>
+                                    <option>Urine Test</option>
+                                    <option>X-Ray</option>
+                                    <option>ECG</option>
+                                    <option>Blood Sugar</option>
+                                    <option>Other</option>
+
+                                </select>
+
+                            </div>
+
+                            <button type="submit" class="primary-btn">
+                                Request Test
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <h3>Diagnostic Requests</h3>
+
+                        <div id="diagnosticList">
+
+                            <div class="empty-state">
+                                <i class="fa-solid fa-flask"></i>
+                                <p>No diagnostic requests</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+           
+
+            <section id="medicine" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2 data-lang="medicineAvailability">
+                            Medicine Availability
+                        </h2>
+
+                        <p>
+                            Monitor medicine stock availability at the facility.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="form-panel">
+
+                        <h3>Add / Update Medicine</h3>
+
+                        <form id="medicineForm">
+
+                            <div class="form-group">
+
+                                <label>Medicine Name</label>
+
+                                <input
+                                    type="text"
+                                    id="medicineName"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Available Quantity</label>
+
+                                <input
+                                    type="number"
+                                    id="medicineQuantity"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Status</label>
+
+                                <select id="medicineStatus">
+
+                                    <option value="Available">
+                                        Available
+                                    </option>
+
+                                    <option value="Low Stock">
+                                        Low Stock
+                                    </option>
+
+                                    <option value="Out of Stock">
+                                        Out of Stock
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <button class="primary-btn" type="submit">
+
+                                <i class="fa-solid fa-pills"></i>
+
+                                Update Medicine
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <h3>Medicine Inventory</h3>
+
+                        <div id="medicineList">
+
+                            <div class="empty-state">
+
+                                <i class="fa-solid fa-pills"></i>
+
+                                <p>No medicine records available</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section id="followup" class="page-section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2 data-lang="highRiskFollowup">
+                            High-Risk Patient Follow-up
+                        </h2>
+
+                        <p>
+                            Monitor patients requiring priority follow-up.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-panel">
+
+                    <form id="followupForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label>Patient Name</label>
+
+                                <input
+                                    type="text"
+                                    id="followupPatient"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Risk Category</label>
+
+                                <select id="riskCategory">
+
+                                    <option>High-Risk Pregnancy</option>
+                                    <option>Chronic Disease</option>
+                                    <option>Child Health</option>
+                                    <option>Elderly Care</option>
+                                    <option>Post Treatment Follow-up</option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Next Follow-up Date</label>
+
+                                <input
+                                    type="date"
+                                    id="followupDate"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Priority Level</label>
+
+                                <select id="riskPriority">
+
+                                    <option>High</option>
+                                    <option>Critical</option>
+                                    <option>Moderate</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <button class="primary-btn" type="submit">
+
+                            <i class="fa-solid fa-heart-pulse"></i>
+
+                            Add Follow-up
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h3>Priority Follow-up List</h3>
+
+                    <div id="followupList">
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-user-shield"></i>
+
+                            <p>No high-risk follow-ups added</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+           
+
+            <section id="emergency" class="page-section">
+
+                <div class="emergency-page">
+
+                    <div class="emergency-header">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        <h1 data-lang="emergencyEscalation">
+                            Emergency Escalation
+                        </h1>
+
+                        <p>
+                            Use this section to initiate urgent healthcare escalation.
+                        </p>
+
+                    </div>
+
+
+                    <div class="emergency-form">
+
+                        <div class="form-group">
+
+                            <label>Patient Name</label>
+
+                            <input
+                                type="text"
+                                id="emergencyPatient"
+                                placeholder="Enter patient name">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Emergency Type</label>
+
+                            <select id="emergencyType">
+
+                                <option>Medical Emergency</option>
+                                <option>Accident / Trauma</option>
+                                <option>Maternal Emergency</option>
+                                <option>Child Emergency</option>
+                                <option>Breathing Difficulty</option>
+                                <option>Other</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Description</label>
+
+                            <textarea
+                                id="emergencyDescription"
+                                rows="4"
+                                placeholder="Describe the emergency situation..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <button class="emergency-btn" onclick="sendEmergencyAlert()">
+
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                            Escalate Emergency
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+
+
+    <div class="modal" id="patientModal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 data-lang="registerPatient">
+                    Register New Patient
+                </h2>
+
+                <button onclick="closePatientModal()">
+                    &times;
+                </button>
+
+            </div>
+
+
+            <form id="patientForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label data-lang="name">Full Name</label>
+
+                        <input
+                            type="text"
+                            id="patientName"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label data-lang="age">Age</label>
+
+                        <input
+                            type="number"
+                            id="patientAge"
+                            min="0"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label data-lang="gender">Gender</label>
+
+                        <select id="patientGender">
+
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label data-lang="contact">Contact Number</label>
+
+                        <input
+                            type="tel"
+                            id="patientContact"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>Address / Village</label>
+
+                        <textarea
+                            id="patientAddress"
+                            rows="3"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="primary-btn">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Patient Record
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+ 
+
+    <div id="toast"></div>
+
+
+    <script src="healthworkerdashboard.js"></script>
+
+</body>
+</html>

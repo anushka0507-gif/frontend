@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SwasthyaSetu | Doctor Dashboard</title>
+
+    
+
+    <link rel="stylesheet"
+        href="doctordashboard.css"
+        href="chatbot.css">
+   
+</head>
+
+<body>
+  
+
+   
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo-section">
+            <div class="logo-icon">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+
+            <div>
+                <h2>SwasthyaSetu</h2>
+                <span id="platformText">Healthcare Platform</span>
+            </div>
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <a href="#dashboard" class="nav-link active">
+                <i class="fa-solid fa-house"></i>
+                <span data-i18n="dashboard">Dashboard</span>
+            </a>
+
+            <a href="#appointments" class="nav-link">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span data-i18n="appointments">Appointments</span>
+            </a>
+
+            <a href="#patients" class="nav-link">
+                <i class="fa-solid fa-users"></i>
+                <span data-i18n="patients">Patients</span>
+            </a>
+
+            <a href="#teleconsultation" class="nav-link">
+                <i class="fa-solid fa-video"></i>
+                <span data-i18n="teleconsultation">Teleconsultation</span>
+            </a>
+
+            <a href="#records" class="nav-link">
+                <i class="fa-solid fa-file-medical"></i>
+                <span data-i18n="records">Patient Records</span>
+            </a>
+
+            <a href="#prescription" class="nav-link">
+                <i class="fa-solid fa-prescription"></i>
+                <span data-i18n="prescription">Prescriptions</span>
+            </a>
+
+            <a href="#referrals" class="nav-link">
+                <i class="fa-solid fa-right-left"></i>
+                <span data-i18n="referrals">Referrals</span>
+            </a>
+
+            <a href="#diagnostics" class="nav-link">
+                <i class="fa-solid fa-flask"></i>
+                <span data-i18n="diagnostics">Diagnostics</span>
+            </a>
+
+            <a href="#emergency" class="nav-link emergency-link">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span data-i18n="emergency">Emergency</span>
+            </a>
+
+            <a href="#availability" class="nav-link">
+                <i class="fa-solid fa-clock"></i>
+                <span data-i18n="availability">Availability</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button class="sidebar-button" id="themeToggle">
+                <i class="fa-solid fa-moon"></i>
+                <span data-i18n="theme">Theme</span>
+            </button>
+
+            <button class="sidebar-button logout-button" id="logoutBtn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span data-i18n="logout">Logout</span>
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <div class="main-container">
+
+
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div>
+                    <h1 data-i18n="doctorDashboard">Doctor Dashboard</h1>
+                    <p data-i18n="dashboardSubtitle">
+                        Manage consultations, patients and healthcare services
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="language-box">
+
+                    <i class="fa-solid fa-language"></i>
+
+                    <select id="languageSelect" aria-label="Language">
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी</option>
+                        <option value="bn">বাংলা</option>
+                        <option value="mr">मराठी</option>
+                    </select>
+
+                </div>
+
+
+                <!-- Notification -->
+                <button class="icon-button" id="notificationBtn" title="Notifications">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+
+                <!-- Doctor Profile -->
+                <button class="profile-button" id="profileBtn">
+
+                    <div class="profile-avatar">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+
+                    <div class="profile-info">
+                        <strong data-i18n="doctor">Doctor</strong>
+                        <small data-i18n="online">Online</small>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <main class="content">
+
+
+
+            <section id="dashboard" class="page-section">
+
+                <div class="welcome-section">
+
+                    <div>
+                        <h2 data-i18n="welcome">Welcome to your Dashboard</h2>
+
+                        <p data-i18n="welcomeText">
+                            Monitor your clinical activities and manage healthcare services efficiently.
+                        </p>
+                    </div>
+
+                    <button class="primary-btn" id="quickConsultBtn">
+                        <i class="fa-solid fa-video"></i>
+                        <span data-i18n="startConsultation">
+                            Start Consultation
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <!-- STATISTICS -->
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon blue">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+
+                        <div>
+                            <p data-i18n="todayAppointments">
+                                Today's Appointments
+                            </p>
+                            <h3 id="appointmentCount">—</h3>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon green">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+
+                        <div>
+                            <p data-i18n="teleconsultations">
+                                Teleconsultations
+                            </p>
+                            <h3 id="consultationCount">—</h3>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon orange">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+
+                        <div>
+                            <p data-i18n="highRiskPatients">
+                                High Risk Patients
+                            </p>
+                            <h3 id="highRiskCount">—</h3>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon red">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+
+                        <div>
+                            <p data-i18n="emergencyAlerts">
+                                Emergency Alerts
+                            </p>
+                            <h3 id="emergencyCount">—</h3>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="dashboard-grid">
+
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h3 data-i18n="quickActions">Quick Actions</h3>
+                        </div>
+
+                        <div class="quick-actions">
+
+                            <button class="quick-action" data-target="appointments">
+                                <i class="fa-solid fa-calendar-plus"></i>
+                                <span data-i18n="manageAppointments">
+                                    Manage Appointments
+                                </span>
+                            </button>
+
+                            <button class="quick-action" data-target="teleconsultation">
+                                <i class="fa-solid fa-video"></i>
+                                <span data-i18n="teleconsultation">
+                                    Teleconsultation
+                                </span>
+                            </button>
+
+                            <button class="quick-action" data-target="prescription">
+                                <i class="fa-solid fa-prescription"></i>
+                                <span data-i18n="createPrescription">
+                                    Create Prescription
+                                </span>
+                            </button>
+
+                            <button class="quick-action" data-target="referrals">
+                                <i class="fa-solid fa-share"></i>
+                                <span data-i18n="createReferral">
+                                    Create Referral
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h3 data-i18n="systemStatus">System Status</h3>
+
+                            <span class="status-online">
+                                <span></span>
+                                <span data-i18n="operational">Operational</span>
+                            </span>
+                        </div>
+
+                        <div class="system-status">
+
+                            <div class="status-item">
+                                <i class="fa-solid fa-wifi"></i>
+                                <div>
+                                    <strong data-i18n="connectivity">
+                                        Connectivity
+                                    </strong>
+                                    <p data-i18n="connectionStatus">
+                                        System connection status
+                                    </p>
+                                </div>
+                                <span class="status-badge" data-i18n="ready">
+                                    Ready
+                                </span>
+                            </div>
+
+                            <div class="status-item">
+                                <i class="fa-solid fa-database"></i>
+                                <div>
+                                    <strong data-i18n="healthRecords">
+                                        Health Records
+                                    </strong>
+                                    <p data-i18n="recordsStatus">
+                                        Secure record access
+                                    </p>
+                                </div>
+                                <span class="status-badge" data-i18n="ready">
+                                    Ready
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section id="appointments" class="page-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2 data-i18n="appointments">Appointments</h2>
+                        <p data-i18n="appointmentsText">
+                            View and manage scheduled consultations.
+                        </p>
+                    </div>
+
+                    <button class="primary-btn" id="newAppointmentBtn">
+                        <i class="fa-solid fa-plus"></i>
+                        <span data-i18n="newAppointment">
+                            New Appointment
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="table-toolbar">
+
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input
+                                type="text"
+                                id="appointmentSearch"
+                                placeholder="Search appointments"
+                                data-placeholder="searchAppointments">
+                        </div>
+
+                        <input type="date" id="appointmentDate">
+
+                    </div>
+
+
+                    <div class="empty-state">
+
+                        <i class="fa-solid fa-calendar-xmark"></i>
+
+                        <h3 data-i18n="noAppointments">
+                            No appointments available
+                        </h3>
+
+                        <p data-i18n="noAppointmentsText">
+                            Scheduled appointments will appear here.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section id="patients" class="page-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2 data-i18n="patients">Patients</h2>
+                        <p data-i18n="patientsText">
+                            Access patient information and healthcare history.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="search-box large-search">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="text"
+                            id="patientSearch"
+                            placeholder="Search by Patient ID or Name"
+                            data-placeholder="searchPatient">
+
+                        <button class="primary-btn" id="patientSearchBtn">
+                            <span data-i18n="search">Search</span>
+                        </button>
+
+                    </div>
+
+
+                    <div class="empty-state" id="patientEmptyState">
+
+                        <i class="fa-solid fa-users"></i>
+
+                        <h3 data-i18n="searchPatientTitle">
+                            Search for a Patient
+                        </h3>
+
+                        <p data-i18n="searchPatientText">
+                            Enter a Patient ID or name to access records.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section id="teleconsultation" class="page-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2 data-i18n="teleconsultation">
+                            Teleconsultation
+                        </h2>
+
+                        <p data-i18n="teleconsultationText">
+                            Conduct secure remote consultations.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="teleconsultation-card">
+
+                    <div class="tele-icon">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+
+                    <h3 data-i18n="readyForConsultation">
+                        Ready for Consultation
+                    </h3>
+
+                    <p data-i18n="consultationDescription">
+                        Select an appointment or patient to begin a secure consultation.
+                    </p>
+
+
+                    <div class="tele-buttons">
+
+                        <button class="primary-btn" id="videoConsultBtn">
+                            <i class="fa-solid fa-video"></i>
+                            <span data-i18n="startVideo">
+                                Start Video Consultation
+                            </span>
+                        </button>
+
+                        <button class="secondary-btn" id="audioConsultBtn">
+                            <i class="fa-solid fa-phone"></i>
+                            <span data-i18n="startAudio">
+                                Start Audio Consultation
+                            </span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section id="records" class="page-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2 data-i18n="records">Patient Records</h2>
+
+                        <p data-i18n="recordsText">
+                            Secure access to longitudinal health records.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="record-search">
+
+                        <i class="fa-solid fa-file-medical"></i>
+
+                        <div>
+                            <h3 data-i18n="findPatientRecord">
+                                Find Patient Record
+                            </h3>
+
+                            <p data-i18n="findPatientRecordText">
+                                Search using a secure Patient ID.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="search-box">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="text"
+                            id="recordSearch"
+                            placeholder="Enter Patient ID"
+                            data-placeholder="enterPatientId">
+
+                        <button class="primary-btn" id="recordSearchBtn">
+                            <span data-i18n="search">Search</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section id="prescription" class="page-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2 data-i18n="prescription">
+                            Prescriptions
+                        </h2>
+
+                        <p data-i18n="prescriptionText">
+                            Create and manage digital prescriptions.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <form id="prescriptionForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label data-i18n="patientId">
+                                    Patient ID
+                                </label>
+
+                                <input type="text" id="prescriptionPatientId" required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label data-i18n="diagnosis">
+                                    Diagnosis
+                                </label>
+
+                                <input type="text" id="diagnosis" required>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label data-i18n="medicineDetails">
+                                Medicine Details
+                            </label>
+
+                            <textarea
+                                id="medicineDetails"
+                                placeholder="Medicine name, dosage and frequency"
+                                data-placeholder="medicinePlaceholder"
+                                required></textarea>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label data-i18n="instructions">
+                                Instructions
+                            </label>
+
+                            <textarea
+                                id="instructions"
+                                placeholder="Additional instructions for the patient"
+                                data-placeholder="instructionsPlaceholder"></textarea>
+
+                        </div>
+
+
+                        <button type="submit" class="primary-btn">
+
+                            <i class="fa-solid fa-floppy-disk"></i>
+
+                            <span data-i18n="savePrescription">
+                                Save Prescription
+                            </span>
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+
+            <section id="referrals" class="page-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2 data-i18n="referrals">Referrals</h2>
+
+                        <p data-i18n="referralText">
+                            Coordinate referrals with healthcare facilities.
+                        </p>
+                    </div>
+
+                    <button class="primary-btn" id="createReferralBtn">
+                        <i class="fa-solid fa-plus"></i>
+                        <span data-i18n="createReferral">
+                            Create Referral
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="empty-state">
+
+                        <i class="fa-solid fa-right-left"></i>
+
+                        <h3 data-i18n="noReferrals">
+                            No referrals available
+                        </h3>
+
+                        <p data-i18n="noReferralsText">
+                            Patient referrals will appear here.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section id="diagnostics" class="page-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2 data-i18n="diagnostics">Diagnostics</h2>
+
+                        <p data-i18n="diagnosticsText">
+                            Coordinate diagnostic tests and review reports.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="diagnostic-grid">
+
+                    <div class="feature-card">
+
+                        <i class="fa-solid fa-flask"></i>
+
+                        <h3 data-i18n="testRequests">
+                            Test Requests
+                        </h3>
+
+                        <p data-i18n="testRequestsText">
+                            Request diagnostic tests.
+                        </p>
+
+                        <button class="secondary-btn" id="requestTestBtn">
+                            <span data-i18n="requestTest">
+                                Request Test
+                            </span>
+                        </button>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <i class="fa-solid fa-file-waveform"></i>
+
+                        <h3 data-i18n="diagnosticReports">
+                            Diagnostic Reports
+                        </h3>
+
+                        <p data-i18n="diagnosticReportsText">
+                            Review available diagnostic reports.
+                        </p>
+
+                        <button class="secondary-btn" id="viewReportsBtn">
+                            <span data-i18n="viewReports">
+                                View Reports
+                            </span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section id="emergency" class="page-section">
+
+                <div class="section-heading emergency-heading">
+
+                    <div>
+                        <h2>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span data-i18n="emergency">
+                                Emergency
+                            </span>
+                        </h2>
+
+                        <p data-i18n="emergencyText">
+                            Manage emergency escalations and urgent cases.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="emergency-card">
+
+                    <div class="emergency-icon">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+
+                    <h3 data-i18n="emergencyEscalation">
+                        Emergency Escalation
+                    </h3>
+
+                    <p data-i18n="emergencyDescription">
+                        Use this option to escalate a verified medical emergency through the appropriate healthcare workflow.
+                    </p>
+
+                    <button class="danger-btn" id="emergencyBtn">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        <span data-i18n="escalateEmergency">
+                            Escalate Emergency
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <section id="availability" class="page-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2 data-i18n="availability">
+                            Availability
+                        </h2>
+
+                        <p data-i18n="availabilityText">
+                            Manage your consultation availability.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <form id="availabilityForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label data-i18n="selectDate">
+                                    Select Date
+                                </label>
+
+                                <input type="date" id="availabilityDate" required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label data-i18n="consultationMode">
+                                    Consultation Mode
+                                </label>
+
+                                <select id="consultationMode">
+
+                                    <option value="online" data-i18n="onlineConsultation">
+                                        Online Consultation
+                                    </option>
+
+                                    <option value="offline" data-i18n="offlineConsultation">
+                                        In-Person Consultation
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label data-i18n="startTime">
+                                    Start Time
+                                </label>
+
+                                <input type="time" id="startTime" required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label data-i18n="endTime">
+                                    End Time
+                                </label>
+
+                                <input type="time" id="endTime" required>
+
+                            </div>
+
+                        </div>
+
+
+                        <button type="submit" class="primary-btn">
+
+                            <i class="fa-solid fa-calendar-check"></i>
+
+                            <span data-i18n="updateAvailability">
+                                Update Availability
+                            </span>
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+     
+
+        <footer>
+
+            <p>
+                © 2026 SwasthyaSetu |
+                <span data-i18n="footerText">
+                    Integrated Rural Healthcare Access Platform
+                </span>
+            </p>
+
+        </footer>
+
+    </div>
+
+
+
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+
+    
+
+    <div class="modal" id="actionModal">
+
+        <div class="modal-content">
+
+            <button class="modal-close" id="modalClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="modal-icon">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+
+            <h3 id="modalTitle">Information</h3>
+
+            <p id="modalMessage"></p>
+
+            <button class="primary-btn" id="modalOkBtn">
+                OK
+            </button>
+
+        </div>
+
+    
+    </div>
+    
+        <iframe 
+            src="chatbot.html" frameborder="0">
+        </iframe>
+
+    <script 
+        src="doctordashboard.js"
+        src="chatbot.js">
+        
+  
+
+    </script>
+
+</body>
+</html>
